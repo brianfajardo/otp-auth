@@ -11,4 +11,4 @@ admin.initializeApp({
 })
 
 exports.createUser = functions.https.onRequest(createUser)
-exports.createUser = functions.https.onRequest(requestOneTimePassword)
+exports.requestOneTimePassword = functions.https.onRequest(requestOneTimePassword)

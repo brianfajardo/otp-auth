@@ -18,7 +18,16 @@ const requestOneTimePassword = (req, res) => {
         from: '+12262701843'
       }, (err) => {
         if (err) { return res.send({ error: err }).status(422) }
+        // Cannot add properties/arbitrary data directly onto the user
+        // because Firebase auth is decoupled from Firebase database.
+        // Creating a separate database of users with their uid, code, and code flag.
+        admin.database().ref(`users/${phoneNumber}`)
+          .update({ code, isValid: true }, () => {
+            res.send({ message: 'Code successfully saved.' }).status(200)
+          })
       })
     })
     .catch(err => res.send({ error: err }).status(422))
 }
+
+module.exports = requestOneTimePassword
