@@ -1,7 +1,6 @@
 const admin = require('firebase-admin')
 
 const createUser = (req, res) => {
-
   if (!req.body.phoneNumber) {
     return res.send({ error: 'Phone number is required.' }).status(422)
   }
