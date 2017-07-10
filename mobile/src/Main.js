@@ -1,8 +1,13 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View } from 'react-native'
+
+import SignUpFormContainer from './containers/SignUpFormContainer'
+// import AuthFormContainer from './containers/AuthFormContainer'
 
 const Main = () => (
-  <Text>We have lift off 🚀</Text>
+  <View>
+    <SignUpFormContainer />
+  </View>
 )
 
 export default Main
