@@ -1,15 +1,17 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Provider } from 'react-redux'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    )
-  }
-}
+import configureStore from './src/store'
+import Main from './src/Main'
+
+const App = () => (
+  <Provider store={configureStore()}>
+    <View style={styles.container}>
+      <Main />
+    </View>
+  </Provider>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -19,3 +21,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+export default App
