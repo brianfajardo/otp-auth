@@ -11,7 +11,7 @@ const verifyOneTimePassword = (req, res) => {
 
   admin.auth().getUser(userProvidedNumber)
     .then(() => {
-      const ref = admin.database.ref(`users/${userProvidedNumber}`)
+      const ref = admin.database().ref(`users/${userProvidedNumber}`)
       // Look at users collection and phone number as the key.
       // When a reference is found, call callback with a snapshot of the node.
       ref.on('value', (snapshot) => {
@@ -22,7 +22,8 @@ const verifyOneTimePassword = (req, res) => {
         if (userProvidedCode !== user.code || !user.isValid) {
           return res.send({ error: 'Invalid code' }).status(422)
         }
-        // Flip valid code flag and then send a JSON web token.
+        // If userProvidedCode passes the above check,
+        // flip code isValid flag then send a JSON web token.
         ref.update({ isValid: false })
         admin.auth().createCustomToken(userProvidedNumber)
           .then(token => res.send(token).status(200))
