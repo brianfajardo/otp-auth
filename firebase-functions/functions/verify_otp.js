@@ -26,8 +26,10 @@ const verifyOneTimePassword = (req, res) => {
         // flip code isValid flag then send a JSON web token.
         ref.update({ isValid: false })
         admin.auth().createCustomToken(userProvidedNumber)
-          .then(token => res.send(token).status(200))
+          .then(token => res.send({ token }).status(200))
       })
     })
     .catch(err => res.send({ error: err }).status(422))
 }
+
+module.exports = verifyOneTimePassword
