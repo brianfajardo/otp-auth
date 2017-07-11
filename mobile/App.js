@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { Provider } from 'react-redux'
 
+import styles from './styles/App_styles'
 import configureStore from './src/store'
 import Main from './src/Main'
 
@@ -12,14 +13,5 @@ const App = () => (
     </View>
   </Provider>
 )
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
 
 export default App

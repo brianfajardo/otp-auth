@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { View, Keyboard, StyleSheet } from 'react-native'
-import { Field, reduxForm, reset } from 'redux-form'
+import { View, Keyboard } from 'react-native'
+import { Field, reduxForm } from 'redux-form'
 import { Text, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import * as actions from '../actions/'
+import styles from '../../styles/SignUpFormContainer_styles'
+import { signUpValidator } from '../utils/formValidation'
 
 class SignUpFormContainer extends Component {
 
@@ -45,8 +48,8 @@ class SignUpFormContainer extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { textInput, button } = styles
+    const { handleSubmit } = this.props
     return (
       <View>
         <Text h3>Sign up</Text>
@@ -59,7 +62,7 @@ class SignUpFormContainer extends Component {
         </View>
         <Button
           title="Submit"
-          onPress={this.props.handleSubmit(this.onFormSubmit)}
+          onPress={handleSubmit(this.onFormSubmit)}
           style={button}
         />
       </View>
@@ -72,26 +75,16 @@ const mapStateToProps = (state) => {
   return { httpError }
 }
 
-const validate = ({ phoneNumber }) => {
-  const errors = {}
-  if (!phoneNumber || phoneNumber.length < 10 || phoneNumber.trim() === '') {
-    errors.phoneNumber = 'Sign up with your 10 digit phone number!'
-  }
-  return errors
+SignUpFormContainer.propTypes = {
+  signUp: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  httpError: PropTypes.string
 }
 
-SignUpFormContainer = reduxForm({
+const SignUpFormContainerWithReduxForm = reduxForm({
   form: 'signUpForm',
-  validate
+  validate: signUpValidator
 })(SignUpFormContainer)
 
-const styles = StyleSheet.create({
-  textInput: {
-    marginBottom: 15
-  },
-  button: {
-    marginBottom: 30
-  }
-})
-
-export default connect(mapStateToProps, actions)(SignUpFormContainer)
+export default connect(mapStateToProps, actions)(SignUpFormContainerWithReduxForm)
