@@ -10,3 +10,7 @@ export const signUp = phoneNumber => async (dispatch) => {
     dispatch({ type: 'GENERATED_ERROR', payload: err })
   }
 }
+
+export const signIn = (phoneNumber, code) => async (dispatch) => {
+  console.log('sign in form action creator!')
+}

@@ -3,12 +3,13 @@ import { View } from 'react-native'
 import { Divider } from 'react-native-elements'
 
 import SignUpFormContainer from './containers/SignUpFormContainer'
-// import AuthFormContainer from './containers/AuthFormContainer'
+import SignInFormContainer from './containers/SignInFormContainer'
 
 const Main = () => (
-  <View>
+  <View style={{ flex: 1, backgroundColor: 'white' }}>
     <SignUpFormContainer />
     <Divider style={{ backgroundColor: 'red' }} />
+    <SignInFormContainer />
   </View>
 )
 

@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import * as actions from '../actions/'
-import styles from '../../styles/SignUpFormContainer_styles'
-import { signUpValidator } from '../utils/formValidation'
+import styles from '../../styles/SignInFormContainer_styles'
+import { signInValidator } from '../utils/formValidation'
 
-class SignUpFormContainer extends Component {
+class SignInFormContainer extends Component {
 
   constructor() {
     super()
@@ -18,27 +18,29 @@ class SignUpFormContainer extends Component {
     this.renderError = this.renderField.bind(this)
   }
 
-  onFormSubmit({ phoneNumber }) {
-    const { signUp, reset } = this.props
+  onFormSubmit({ phoneNumber, code }) {
+    const { signIn, reset } = this.props
     Keyboard.dismiss()
-    signUp(phoneNumber)
+    signIn(phoneNumber, code)
     reset()
   }
 
   renderField(fieldProps) {
     const {
       input,
+      label,
+      maxLength,
       meta: { touched, error },
       ...props
     } = fieldProps
     const hasError = touched && error !== undefined
     return (
       <View>
-        <FormLabel>Mobile number</FormLabel>
+        <FormLabel>{label}</FormLabel>
         <FormInput
           {...input}
           {...props}
-          maxLength={10}
+          maxLength={maxLength}
           keyboardType="numbers-and-punctuation"
           keyboardAppearance="light"
         />
@@ -52,11 +54,20 @@ class SignUpFormContainer extends Component {
     const { handleSubmit } = this.props
     return (
       <View>
-        <Text h3>Sign up</Text>
+        <Text h3>Sign In</Text>
         <View style={textInput}>
           <Field
             type="number"
+            label="Mobile number"
             name="phoneNumber"
+            maxLength={10}
+            component={this.renderField}
+          />
+          <Field
+            type="number"
+            label="Code"
+            name="code"
+            maxLength={4}
             component={this.renderField}
           />
         </View>
@@ -70,21 +81,15 @@ class SignUpFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const httpError = state.auth.error
-  return { httpError }
-}
-
-SignUpFormContainer.propTypes = {
-  signUp: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+SignInFormContainer.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  httpError: PropTypes.string
+  reset: PropTypes.func.isRequired,
+  signIn: PropTypes.func.isRequired
 }
 
-const SignUpFormContainerWithReduxForm = reduxForm({
-  form: 'signUpForm',
-  validate: signUpValidator
-})(SignUpFormContainer)
+const SignInFormContainerWithReduxForm = reduxForm({
+  form: 'signInForm',
+  validate: signInValidator
+})(SignInFormContainer)
 
-export default connect(mapStateToProps, actions)(SignUpFormContainerWithReduxForm)
+export default connect(null, actions)(SignInFormContainerWithReduxForm)
