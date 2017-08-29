@@ -22,7 +22,7 @@ class Main extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ backgroundColor: 'white' }}>
         <SignUpFormContainer />
         <Divider style={{ backgroundColor: 'red' }} />
         <SignInFormContainer />
